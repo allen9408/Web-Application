@@ -4,6 +4,8 @@
 
 ## BayesBurFit
 
+More details on [Github](https://github.com/allen9408/Web-Application).
+
 ### Supported platform:
 
 + Windows
@@ -27,17 +29,15 @@
      make
      ```
 
-
    + Build executable file:
 
-     ``` bash
+     ```bash
      gcc main.c BayesCurFit.a -lm -fopenmp -o Bayes
      ```
 
 3. **MacOS:**
 
    + TBD
-
 
 
 ### How To Execute
