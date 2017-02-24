@@ -127,7 +127,7 @@ static void main_BayesCurFit(char xfile[], char tfile[], int size, int order, fl
  *                const char * const argv[]
  * Return Type  : int
  */
-int main(int argc, const char * const argv[])
+int main(int argc, char * const argv[])
 {
   (void)argc;
   (void)argv;
