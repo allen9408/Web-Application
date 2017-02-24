@@ -18,31 +18,20 @@
    + Import all files into project
    + Build
 
-2. **Linux:**
-
-   + Modify Makefile *(line 27-31)*:
-
-     + Replace all matlab location to your matlab location
-     + Replace *START_DIR* to code location
-
-     ```bash
-     MATLAB_ROOT               = /usr/local/MATLAB/R2015b
-     MATLAB_BIN                = /usr/local/MATLAB/R2015b/bin
-     MATLAB_ARCH_BIN           = /usr/local/MATLAB/R2015b/bin/glnxa64
-     MASTER_ANCHOR_DIR         = 
-     START_DIR                 = /home/allen/HW3_2
-     ```
+2. **Linux/ Cygwin on Windows:**
 
    + Build static library *(generate BayesCurFit.a)*:
 
-     ```bash
+     ``` bash
+     cd Linux/BayesCurFit
      make
      ```
+
 
    + Build executable file:
 
      ``` bash
-     gcc main.c BayesCurfit.a -lm -fopenmp -o Bayes
+     gcc main.c BayesCurFit.a -lm -fopenmp -o Bayes
      ```
 
 3. **MacOS:**
