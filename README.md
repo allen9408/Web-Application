@@ -4,7 +4,7 @@
 
 ## BayesBurFit
 
-More details on [Github](https://github.com/allen9408/Web-Application).
+More details on [Github](https://github.com/allen9408/Web-Application).  
 
 #### Supported platform:
 
