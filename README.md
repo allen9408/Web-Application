@@ -6,13 +6,13 @@
 
 More details on [Github](https://github.com/allen9408/Web-Application).
 
-### Supported platform:
+#### Supported platform:
 
 + Windows
 + Linux
 + MacOS (*Require Xcode, to be verified*)
 
-### How To Build
+#### How To Build
 
 1. **Windows:**
 
@@ -40,7 +40,7 @@ More details on [Github](https://github.com/allen9408/Web-Application).
    + TBD
 
 
-### How To Execute
+#### How To Execute
 
 ``` bash
 ./Bayes {x_input_file} {t_input_file} {size} {order} {x_to_predict}
@@ -52,3 +52,34 @@ example:
 
 
 
+## Get Stock Information From Yahoo Finance
+
+#### How To Execute
+
+```bash
+cd GetStock
+# Get history information
+php getHistory.php
+# Get real time information
+php getReal.php
+```
+
+#### Stocks
+
+| Code |  Company  |
+| :--: | :-------: |
+| GOOG |  Google   |
+| YHOO |   Yahoo   |
+| MSFT | Microsoft |
+|  FB  | Facebook  |
+| CCF  |   Chase   |
+
+#### Results
+
+Find history data in `./GetStock/hist_data/{Code}-{Time}.csv`.
+
+Find real-time data in `./GetStock/real_data/{Code}-{Time}.csv`.
+
+#### Known Issues
+
++ Timestamp is different due to different API.
