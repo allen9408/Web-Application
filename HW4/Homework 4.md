@@ -189,3 +189,92 @@ return  <date>
 </bid>
 ```
 
+**(b)**
+
+```xml
+insert node element book{
+  <author>
+    <first_name>first_name1</first_name>
+    <last_name>last_name1</last_name>
+  </author>
+  <title>title1</title>
+  <year>year1</year>
+  <publisher>publisher1</publisher>
+  <address>address1</address>
+} into document("bid.xml")/bid
+
+insert node element book{
+  <author>
+    <first_name>first_name2</first_name>
+    <last_name>last_name2</last_name>
+  </author>
+  <title>title2</title>
+  <year>year2</year>
+  <publisher>publisher2</publisher>
+  <address>address2</address>
+} into document("bid.xml")/bid
+
+insert node element article{
+  <author>
+    <first_name>first_name3</first_name>
+    <last_name>last_name3</last_name>
+  </author>
+  <title>title3</title>
+  <year>year3</year>
+  <volume>volume3</volume>
+  <page>
+    <from>page_from1</from>
+    <to>page_to1</to>
+  </page>
+  <journal>journal1</journal>
+}into document("bid.xml")/bid
+
+insert node element article{
+  <author>
+    <first_name>first_name4</first_name>
+    <last_name>last_name4</last_name>
+  </author>
+  <title>title4</title>
+  <year>year4</year>
+  <volume>volume4</volume>
+  <page>
+    <from>page_from2</from>
+    <to>page_to2</to>
+  </page>
+  <journal>journal2</journal>
+}into document("bid.xml")/bid
+```
+
+**(c)**
+
+Add the following code to DTD file:
+
+```dtd
+<!ELEMENT phd_thesis(author, year, title, school)>
+<!ELEMENT school (#PCDATA)>
+```
+
+xml:
+
+```xml
+insert element phd_thesis{
+  <author>
+    <first_name>first_name5</first_name>
+    <last_name>last_name5</last_name>
+  </author>
+  <year>year5</year>
+  <title>title5</title>
+  <school>school5</school>
+}into document("bid.xml")/bid
+
+insert element phd_thesis{
+  <author>
+    <first_name>first_name6</first_name>
+    <last_name>last_name6</last_name>
+  </author>
+  <year>year6</year>
+  <title>title6</title>
+  <school>school6</school>
+}into document("bid.xml")/bid
+```
+
