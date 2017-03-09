@@ -90,9 +90,9 @@ static void main_BayesCurFit(char xfile[], char tfile[], int size, float x_new)
   double m;
   double b_std;
   double e_tmp;
-  double pred_value[8];
-  double stde_value[8];
-  double rele_value[8];
+  double pred_value[9];
+  double stde_value[9];
+  double rele_value[9];
   int min_pt = 0;
   int order;
 
@@ -122,15 +122,16 @@ static void main_BayesCurFit(char xfile[], char tfile[], int size, float x_new)
   /* Call the entry-point 'BayesCurFit'. */
   //argInit_1x1024_real_T(dv0);
   //argInit_1x1024_real_T(dv1);
-  for (order=2; order<10; order++){
+  for (order=1; order<10; order++){
     BayesCurFit(dv0, dv1, size, order, x_new,
                 &m, &b_std);
-    pred_value[order-2] = m;
-    stde_value[order-2] = fabs(b_std);
-    rele_value[order-2] = fabs(b_std/m);
+    pred_value[order-1] = m;
+    stde_value[order-1] = fabs(b_std);
+    rele_value[order-1] = fabs(b_std/m);
   }
   e_tmp = rele_value[0];
-  for(i=1; i<8; i++) {
+  for(i=1; i<9; i++) {
+    // printf("%f,%d\n", rele_value[i], i);
     if (rele_value[i] < e_tmp)
     {
       min_pt = i;
@@ -140,7 +141,7 @@ static void main_BayesCurFit(char xfile[], char tfile[], int size, float x_new)
   printf("Prediction for %f: %f\n", x_new, pred_value[min_pt]);
   printf("Standard deviation: %f\n", stde_value[min_pt]);
   printf("Relative deviation:%f\n", rele_value[min_pt]);
-  printf("Order:%d\n", min_pt+2);
+  // printf("Order:%d\n", min_pt+1);
 }
 
 /*
