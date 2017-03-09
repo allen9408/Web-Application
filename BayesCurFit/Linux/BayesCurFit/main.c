@@ -41,7 +41,7 @@
 static void argInit_1x1024_real_T(double result[1024]);
 static float argInit_real32_T(void);
 static double argInit_real_T(void);
-static void main_BayesCurFit(char xfile[], char tfile[], int size, int order, float x_new);
+static void main_BayesCurFit(char xfile[], char tfile[], int size, float x_new);
 
 /* Function Definitions */
 
@@ -83,12 +83,18 @@ static double argInit_real_T(void)
  * Arguments    : void
  * Return Type  : void
  */
-static void main_BayesCurFit(char xfile[], char tfile[], int size, int order, float x_new)
+static void main_BayesCurFit(char xfile[], char tfile[], int size, float x_new)
 {
   double dv0[1024];
   double dv1[1024];
   double m;
   double b_std;
+  double e_tmp;
+  double pred_value[8];
+  double stde_value[8];
+  double rele_value[8];
+  int min_pt = 0;
+  int order;
 
   int i=0;
   char tmp[20];
@@ -116,10 +122,25 @@ static void main_BayesCurFit(char xfile[], char tfile[], int size, int order, fl
   /* Call the entry-point 'BayesCurFit'. */
   //argInit_1x1024_real_T(dv0);
   //argInit_1x1024_real_T(dv1);
-  BayesCurFit(dv0, dv1, size, order, x_new,
-              &m, &b_std);
-  printf("Prediction for %f: %f\n", x_new, m);
-  printf("Standard deviation: %f\n", b_std);
+  for (order=2; order<10; order++){
+    BayesCurFit(dv0, dv1, size, order, x_new,
+                &m, &b_std);
+    pred_value[order-2] = m;
+    stde_value[order-2] = fabs(b_std);
+    rele_value[order-2] = fabs(b_std/m);
+  }
+  e_tmp = rele_value[0];
+  for(i=1; i<8; i++) {
+    if (rele_value[i] < e_tmp)
+    {
+      min_pt = i;
+      e_tmp = rele_value[i];
+    }
+  }
+  printf("Prediction for %f: %f\n", x_new, pred_value[min_pt]);
+  printf("Standard deviation: %f\n", stde_value[min_pt]);
+  printf("Relative deviation:%f\n", rele_value[min_pt]);
+  printf("Order:%d\n", min_pt+2);
 }
 
 /*
@@ -133,8 +154,8 @@ int main(int argc, char * const argv[])
   (void)argv;
 
   int size = atoi(argv[3]);
-  int order = atoi(argv[4]);
-  float x_new = atof(argv[5]);
+  // int order = atoi(argv[4]);
+  float x_new = atof(argv[4]);
 
   /* Initialize the application.
      You do not need to do this more than one time. */
@@ -142,7 +163,7 @@ int main(int argc, char * const argv[])
 
   /* Invoke the entry-point functions.
      You can call entry-point functions multiple times. */
-  main_BayesCurFit(argv[1], argv[2], size, order, x_new);
+  main_BayesCurFit(argv[1], argv[2], size, x_new);
 
   /* Terminate the application.
      You do not need to do this more than one time. */
