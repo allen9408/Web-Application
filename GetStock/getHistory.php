@@ -38,7 +38,6 @@ fclose($ofile);
 $day = date("d");
 $month = date("m");
 $year = date("Y");
-$stock = "msft";
 
 
 $stock = array("YHOO", "GOOG", "MSFT", "FB", "CCF");

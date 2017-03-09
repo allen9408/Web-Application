@@ -35,7 +35,7 @@ while (!feof($file)) {
 }
 $ofilename = "./real_data/$stock-$month-$day-$year.csv";
 $ofile = fopen($ofilename,"w");
-fwrite($ofile,"timestamp,close,high,low,open,volume");
+fwrite($ofile,"timestamp,close,high,low,open,volume\n");
 fwrite($ofile,$contents);
 // echo $contents > "hahaha.csv";
 fclose($file); 

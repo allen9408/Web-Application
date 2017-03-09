@@ -54,6 +54,17 @@ example:
 
 ## Get Stock Information From Yahoo Finance
 
+#### Configure for MYSQL
+
+**GetStock/CreateDatabase.php  &&  GetStock/ImportData.php**
+
+Modify username and password according to your configuration for mySQL:
+
+```php
+$username = "root";
+$password = "";
+```
+
 #### How To Execute
 
 ```bash
@@ -62,6 +73,10 @@ cd GetStock
 php getHistory.php
 # Get real time information
 php getReal.php
+# Create database
+php CreateDatabase.php
+# Import data to database
+php ImportData.php
 ```
 
 #### Stocks
@@ -83,3 +98,4 @@ Find real-time data in `./GetStock/real_data/{Code}-{Time}.csv`.
 #### Known Issues
 
 + Timestamp is different due to different API.
++ Warning fixes
