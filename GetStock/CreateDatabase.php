@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
@@ -13,16 +13,16 @@ if ($conn->connect_error) {
 // Create database
 $sql = "CREATE DATABASE IF NOT EXISTS History_Data";
 if ($conn->query($sql) === TRUE) {
-    echo "Database created successfully \n";
+    echo "History database created successfully \n";
 } else {
-    echo "Error creating database: " . $conn->error;
+    echo "Error creating history database: " . $conn->error;
 }
 
 $sql = "CREATE DATABASE IF NOT EXISTS Real_Data";
 if ($conn->query($sql) === TRUE) {
-    echo "Database created successfully \n";
+    echo "Real_time database created successfully \n";
 } else {
-    echo "Error creating database: " . $conn->error;
+    echo "Error creating real_time database: " . $conn->error;
 }
 $conn->close();
 ?>

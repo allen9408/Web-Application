@@ -34,6 +34,9 @@ while (!feof($file)) {
 	$count ++;
 }
 $ofilename = "./real_data/$stock-$month-$day-$year.csv";
+if (file_exists($ofilename)) {
+	unlink($ofilename);
+}
 $ofile = fopen($ofilename,"w");
 fwrite($ofile,"timestamp,close,high,low,open,volume\n");
 fwrite($ofile,$contents);

@@ -77,6 +77,10 @@ php getReal.php
 php CreateDatabase.php
 # Import data to database
 php ImportData.php
+# Output database tables
+php showDatabase.php
+# Clear tables
+php clearTable.php
 ```
 
 #### Stocks

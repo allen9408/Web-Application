@@ -27,6 +27,10 @@ while (!feof($file)) {
  $contents .= fread($file, 8192);
 }
 $ofilename = "./hist_data/$stock-hist-$month-$day-$year.csv";
+// check whether the file exists
+if (file_exists($ofilename)) {
+	unlink($ofilename);
+}
 $ofile = fopen($ofilename,"w");
 fwrite($ofile,$contents);
 // echo $contents > "hahaha.csv";
