@@ -63,7 +63,7 @@ foreach ($stock as $tmp) {
 			echo "Error import ".$tmp.": ".$conn->error."\n";
 		}
 	}
-	echo "Import ".$tmp." data complete\n";
+	echo "Import ".$tmp." history data complete\n";
 
 }
 $conn->close();
