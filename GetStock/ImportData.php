@@ -33,13 +33,7 @@ foreach ($stock as $tmp) {
 	)";
 	// check if the table exists
 	$result = $conn->query("SELECT * FROM $tmp");
-	// while ($row = $result->fetch_array()) {
-	// 	if (!$row) 
-	// 		$et = 0;
-	// 	else 
-	// 		$et = 1;
-	// }
-	// if not exist, create table
+	// if not exist, create new table
 	if (!$result){
 		if ($conn->query($sql) === TRUE) {
 	    	echo $tmp."Table created successfully \n";
@@ -69,6 +63,7 @@ foreach ($stock as $tmp) {
 			echo "Error import ".$tmp.": ".$conn->error."\n";
 		}
 	}
+	echo "Import ".$tmp." data complete\n";
 
 }
 $conn->close();
@@ -96,12 +91,6 @@ foreach ($stock as $tmp) {
 
 	// check if the table exists
 	$result = $conn->query("SELECT * FROM $tmp");
-	// while ($row = $result->fetch_array()) {
-	// 	if (!$row) 
-	// 		$et = 0;
-	// 	else 
-	// 		$et = 1;
-	// }
 	// if exists, delete old table
 	if ($result) {
 		if(!$conn->query("drop table $tmp")) {
