@@ -43,7 +43,7 @@ More details on [Github](https://github.com/allen9408/Web-Application).
 #### How To Execute
 
 ``` bash
-./Bayes {x_input_file} {t_input_file} {size} {order} {x_to_predict}
+./Bayes {x_input_file} {t_input_file} {size} {x_to_predict}
 ```
 
 example:
