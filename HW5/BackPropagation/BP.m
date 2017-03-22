@@ -7,6 +7,7 @@ hnode = zeros(1,2);
 w_delta = zeros(1,2);
 v_delta = zeros(2,2);
 times = 0;
+err_1 = 0;
 w_final = zeros(1,2);
 err = 0;
 % start traning
