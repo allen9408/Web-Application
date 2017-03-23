@@ -114,7 +114,7 @@ Find real-time data in `./GetStock/real_data/{Code}-{Time}.csv`.
 ```bash
 cd {DIR}
 make
-GCC main.c BP.a -o BP
+GCC main.c BP.a -lm -fopenmp -o BP
 ./BP {learning_rate} {max_training_times} {target_error}
 ```
 
