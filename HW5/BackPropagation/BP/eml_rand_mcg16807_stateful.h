@@ -2,7 +2,7 @@
  * File: eml_rand_mcg16807_stateful.h
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 22-Mar-2017 18:13:22
+ * C/C++ source code generated on  : 24-Mar-2017 02:25:18
  */
 
 #ifndef __EML_RAND_MCG16807_STATEFUL_H__
