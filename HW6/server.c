@@ -22,27 +22,14 @@ int main(int argc, char *argv[]) {
         sprintf(msg, "Usage: %s server_port\n", argv[0]);
         ERR_EXIT(msg);
 	}
-	/* Get host name */
-	char hostname[1024];
-	hostname[1023] = '\0';
-	gethostname(hostname, 1023);
-	printf("Hostname: %s\n", hostname);
-	// h = get_hostIPaddr(hostname);
-	h = 69113037056;
-	printf("%u\n", INADDR_ANY);
-	printf("%lu\n", h);
 
-	// struct hostent* h;
-	// h = gethostbyname(hostname);
-	// printf("h_name: %s\n", h->h_name);
-	/*-------*/
 	rv_sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (rv_sock < 0) ERR_EXIT("ERROR opening socket"); 
 	memset((char *) &serv_addr, 0, sizeof(serv_addr));
 	port_num = atoi(argv[1]); /* First arg: server port num. */ 
 	serv_addr.sin_family = AF_INET;
 	// serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); 
-	serv_addr.sin_addr.s_addr = htonl(h); 
+	serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	serv_addr.sin_port = htons(port_num);
 	if (bind(rv_sock,(struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
 		ERR_EXIT("ERROR on binding"); 

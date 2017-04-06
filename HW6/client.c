@@ -15,27 +15,28 @@ int main(int argc, char *argv[]) {
 	struct hostent *serverIP; 
 	char buffer[RECVBUFSIZE];
 	unsigned long h;
-    if (argc != 3) {   /* Test for correct number of arguments */
+    if (argc != 2) {   /* Test for correct number of arguments */
         char msg[64];  
         memset((char *) &msg, 0, 64);  /* erase */
         sprintf(msg, "Usage: %s serv_name serv_port\n", argv[0]);
         ERR_EXIT(msg);
 	}
-	serverIP = gethostbyname(argv[1]); /* 1st arg: server name */ 
-	printf("serverIP_name: %s\n", serverIP->h_name);
-	h = get_hostIPaddr(argv[1]);
-	printf("%lu\n", h);
+	// serverIP = gethostbyname(argv[1]); /* 1st arg: server name */ 
+	// printf("serverIP_name: %s\n", serverIP->h_name);
+	// h = get_hostIPaddr(argv[1]);
+	// printf("%lu\n", h);
 
-	if (serverIP == NULL)
-		ERR_EXIT("ERROR, server host name unknown");
-	port_num = atoi(argv[2]); /* Second arg: server port num. */ 
+	// if (serverIP == NULL)
+	// 	ERR_EXIT("ERROR, server host name unknown");
+	port_num = atoi(argv[1]); /* Second arg: server port num. */ 
 	c_sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (c_sock < 0) 
 		ERR_EXIT("ERROR opening socket"); 
 	memset((char *) &serv_addr, 0, sizeof(serv_addr)); 
 	serv_addr.sin_family = AF_INET;
-	memcpy((char *) &serv_addr.sin_addr.s_addr,
-		(char *) &(serverIP->h_addr), serverIP->h_length); 
+	// memcpy((char *) &serv_addr.sin_addr.s_addr,
+	// 	(char *) &(serverIP->h_addr), serverIP->h_length); 
+	serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	serv_addr.sin_port = htons(port_num);
 	
 	if (connect(c_sock,
