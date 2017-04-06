@@ -12,7 +12,7 @@
 #define ERR_EXIT(msg) { perror(msg); exit(1); }
 
 int main(int argc, char *argv[]) {
-	int rv_sock, s_sock, port_num, msg_len;
+	int rv_sock, s_sock, port_num, msg_len, tmp;
 	char buffer[RCVBUFSIZE];
 	struct sockaddr_in serv_addr;
 	unsigned h;
@@ -43,8 +43,15 @@ int main(int argc, char *argv[]) {
 		memset(buffer, 0, RCVBUFSIZE);
 		msg_len = recv(s_sock, buffer, RCVBUFSIZE - 1, 0); 
 		if (msg_len < 0)
-	            ERR_EXIT("ERROR reading from socket");
+	        ERR_EXIT("ERROR reading from socket");
 	    fprintf(stdout, "Client's message: %s\n", buffer);
+	    tmp = strcmp(buffer, "EXIT\n");
+	    if (tmp == 0) {
+	    	/* received exit */
+	    	fprintf(stdout, "Client exit\n");
+	    	close(s_sock);
+	    	exit(0);
+	    }
 	    msg_len = send(s_sock, "I got your message", 18, 0); 
 	    if (msg_len < 0) 
 	    	ERR_EXIT("ERROR writing to socket"); 

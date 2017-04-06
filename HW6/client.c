@@ -38,21 +38,29 @@ int main(int argc, char *argv[]) {
 	// 	(char *) &(serverIP->h_addr), serverIP->h_length); 
 	serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	serv_addr.sin_port = htons(port_num);
-	
+
 	if (connect(c_sock,
 		(struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) 
 		ERR_EXIT("ERROR connecting");
-	fprintf(stdout, "User, enter your message: "); 
+	
+	// while (1) {
+	fprintf(stdout, "\nUser, enter your message: "); 
 	memset(buffer, 0, RECVBUFSIZE); /* erase */ 
 	fgets(buffer, RECVBUFSIZE, stdin); /* read input */ 
 	msg_len = send(c_sock, buffer, strlen(buffer), 0); 
 	if (msg_len < 0) 
 		ERR_EXIT("ERROR writing to socket"); 
+	if (strcmp(buffer, "EXIT\n") == 0) {
+		fprintf(stdout, "Exit\n");
+		close(c_sock);
+		exit(0);
+	}
 	memset(buffer, 0, RECVBUFSIZE);
 	msg_len = recv(c_sock, buffer, RECVBUFSIZE - 1, 0);
 	if (msg_len < 0) 
 		ERR_EXIT("ERROR reading from socket"); 
 	fprintf(stdout, "Server says: %s\n", buffer); 
+	// }
 	close(c_sock);
 	exit(0);
 }
