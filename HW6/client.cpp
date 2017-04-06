@@ -6,11 +6,11 @@
 #include <arpa/inet.h>  /* for sockaddr_in */
 #include <netdb.h>      /* for hostent, gethostbyname() */
 #include <unistd.h>     /* for close() */
-#include "getname.h"
 #define RECVBUFSIZE 256 /* Size of receive buffer */
 #define ERR_EXIT(msg) { perror(msg); exit(1); }
 int main(int argc, char *argv[]) { 
 	int c_sock, port_num, msg_len; 
+	int cut = 0;
 	struct sockaddr_in serv_addr; 
 	struct hostent *serverIP; 
 	char buffer[RECVBUFSIZE];
@@ -43,24 +43,60 @@ int main(int argc, char *argv[]) {
 		(struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) 
 		ERR_EXIT("ERROR connecting");
 	
-	// while (1) {
-	fprintf(stdout, "\nUser, enter your message: "); 
-	memset(buffer, 0, RECVBUFSIZE); /* erase */ 
-	fgets(buffer, RECVBUFSIZE, stdin); /* read input */ 
-	msg_len = send(c_sock, buffer, strlen(buffer), 0); 
-	if (msg_len < 0) 
-		ERR_EXIT("ERROR writing to socket"); 
-	if (strcmp(buffer, "EXIT\n") == 0) {
-		fprintf(stdout, "Exit\n");
-		close(c_sock);
-		exit(0);
+	while (!cut) {
+		int isCorrect = 0;
+		do {
+			fprintf(stdout, "\nUser, enter your message: "); 
+			memset(buffer, 0, RECVBUFSIZE); /* erase */ 
+			fgets(buffer, RECVBUFSIZE, stdin); /* read input */ 			
+			if (!(strncmp(buffer, "GET ", 4) ==0 || strncmp(buffer, "EXIT ", 5)== 0
+				|| strncmp(buffer, "BOUNCE ", 6)== 0 || strcmp(buffer, "EXIT\n")== 0)) {
+				/* Incorrect command*/
+				isCorrect = 0;
+				fprintf(stdout, "Incorrect command: %s\n", buffer);
+			} else {
+				isCorrect = 1;
+			}
+		} while(!isCorrect);
+		
+
+		/* Send Request */
+		msg_len = send(c_sock, buffer, strlen(buffer), 0); 
+		if (msg_len < 0) 
+			ERR_EXIT("ERROR writing to socket"); 
+		
+		if (strcmp(buffer, "EXIT\n") == 0 || strncmp(buffer, "EXIT ", 5) == 0) {
+			fprintf(stdout, "Exit\n");
+			close(c_sock);
+			exit(0);
+		}
+		if (strncmp(buffer, "GET ", 4) == 0) {
+			/* get file context */
+			char buf[RECVBUFSIZE];
+			while (strcmp(buffer, "-1") != 0){
+				/* clear buffer */
+				memset(buffer, 0, RECVBUFSIZE);
+				msg_len = recv(c_sock, buffer, RECVBUFSIZE - 1, 0);
+				if (msg_len < 0) 
+					ERR_EXIT("ERROR reading from socket");
+				// ACK
+				msg_len = send(c_sock, "get context", 11, 0); 
+				if (msg_len < 0) 
+					ERR_EXIT("ERROR writing to socket");
+				if (strcmp(buffer, "-1") == 0)
+					break;
+				else
+					fprintf(stdout, "%s", buffer); 
+			}
+		} else {
+			/* clear buffer */
+			memset(buffer, 0, RECVBUFSIZE);
+			msg_len = recv(c_sock, buffer, RECVBUFSIZE - 1, 0);
+			if (msg_len < 0) 
+				ERR_EXIT("ERROR reading from socket"); 
+			fprintf(stdout, "Server says: %s\n", buffer); 
+		}
 	}
-	memset(buffer, 0, RECVBUFSIZE);
-	msg_len = recv(c_sock, buffer, RECVBUFSIZE - 1, 0);
-	if (msg_len < 0) 
-		ERR_EXIT("ERROR reading from socket"); 
-	fprintf(stdout, "Server says: %s\n", buffer); 
-	// }
 	close(c_sock);
 	exit(0);
 }
