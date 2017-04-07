@@ -40,7 +40,8 @@ int main(int argc, char *argv[]) {
 	while ( 1 ) { /* Server runs forever */ 
 		fprintf(stdout, "\nWaiting for client to connect...\n"); 
 		s_sock = accept(rv_sock, NULL, NULL);
-		if (s_sock < 0) ERR_EXIT("ERROR on accept new client"); 
+		if (s_sock < 0) ERR_EXIT("ERROR on accept new client");
+		cut = 0; 
 		while (cut == 0) {
 			memset(buffer, 0, RCVBUFSIZE);
 			msg_len = recv(s_sock, buffer, RCVBUFSIZE - 1, 0); 
@@ -66,12 +67,12 @@ int main(int argc, char *argv[]) {
 		    	}
 		    	fprintf(stdout, "Client exit with code %s\n", buf);
 		    	close(s_sock);
-		    	exit(0);
+		    	cut = 1;
 		    } else if (strcmp(buffer, "EXIT\n") == 0) {
 		    	/* received exit */
 		    	fprintf(stdout, "Client exit\n");
 		    	close(s_sock);
-		    	exit(0);
+		    	cut = 1;
 		    } else if (strncmp(buffer, "GET ",4) == 0) {
 		    	/* Get file */
 		    	char filename[RCVBUFSIZE];
