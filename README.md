@@ -118,5 +118,39 @@ GCC main.c BP.a -lm -fopenmp -o BP
 ./BP {learning_rate} {max_training_times} {target_error}
 ```
 
+## HW6/ TCP Server and Client
+
+**Compile and Run:**
+
+```bash
+cd {DIR}
+g++ server.cpp -o server
+g++ client.cpp -o client
+./server [port_num]
+./client [port_num]
+```
+
+**Commands supported by the server:**
+
+1. Get files
+
+   `GET [filename]`
+
+2. Bounce text
+
+   `BOUNCE [text]`
+
+3. Exit
+
+   `EXIT`
+
+   or
+
+   `EXIT [exit_code]`
+
+   ​
+
+
+
 
 
