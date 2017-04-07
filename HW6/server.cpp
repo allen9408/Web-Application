@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 			if (msg_len < 0)
 		        ERR_EXIT("ERROR reading from socket");
 		    fprintf(stdout, "Client's message: %s\n", buffer);
-		    fprintf(stdout, "Message Length: %d\n", msg_len);
+		    // fprintf(stdout, "Message Length: %d\n", msg_len);
 
 		    if (strncmp(buffer, "BOUNCE ", 7) == 0) {
 		    	/* Received BOUNCE */
