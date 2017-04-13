@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 		    	cut = 1;
 		    } else if (strcmp(buffer, "EXIT\n") == 0) {
 		    	/* received exit */
-		    	fprintf(stdout, "Client exit\n");
+		    	fprintf(stdout, "Client common exit\n");
 		    	close(s_sock);
 		    	cut = 1;
 		    } else if (strncmp(buffer, "GET ",4) == 0) {
@@ -114,6 +114,7 @@ int main(int argc, char *argv[]) {
 		    		} 
 		    		/* End of transmit */
 			    	msg_len = send(s_sock, "-1", 2, 0);
+			    	fclose(file);
 		    		if (msg_len < 0)
 		    			ERR_EXIT("ERROR writing to socket");		    		
 			    	msg_len = recv(s_sock, buf, RCVBUFSIZE - 1, 0);

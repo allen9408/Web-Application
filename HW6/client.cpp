@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	struct hostent *serverIP; 
 	char buffer[RECVBUFSIZE];
 	unsigned long h;
-    if (argc != 2) {   /* Test for correct number of arguments */
+    if (argc != 3) {   /* Test for correct number of arguments */
         char msg[64];  
         memset((char *) &msg, 0, 64);  /* erase */
         sprintf(msg, "Usage: %s serv_name serv_port\n", argv[0]);
@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
 
 	// if (serverIP == NULL)
 	// 	ERR_EXIT("ERROR, server host name unknown");
-	port_num = atoi(argv[1]); /* Second arg: server port num. */ 
+	// char ip_addr[1024] = argv[1];
+	port_num = atoi(argv[2]); /* Second arg: server port num. */ 
 	c_sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (c_sock < 0) 
 		ERR_EXIT("ERROR opening socket"); 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
 	serv_addr.sin_family = AF_INET;
 	// memcpy((char *) &serv_addr.sin_addr.s_addr,
 	// 	(char *) &(serverIP->h_addr), serverIP->h_length); 
-	serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
 	serv_addr.sin_port = htons(port_num);
 
 	if (connect(c_sock,
@@ -94,7 +95,7 @@ int main(int argc, char *argv[]) {
 			msg_len = recv(c_sock, buffer, RECVBUFSIZE - 1, 0);
 			if (msg_len < 0) 
 				ERR_EXIT("ERROR reading from socket"); 
-			fprintf(stdout, "Server says: %s\n", buffer); 
+			fprintf(stdout, "%s\n", buffer); 
 		}
 	}
 	close(c_sock);
