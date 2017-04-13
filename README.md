@@ -113,9 +113,8 @@ Find real-time data in `./GetStock/real_data/{Code}-{Time}.csv`.
 
 ```bash
 cd {DIR}
-make
-GCC main.c BP.a -lm -fopenmp -o BP
-./BP {learning_rate} {max_training_times} {target_error}
+g++ bp.cpp -o bp
+./bp {max_training_times} {target_error} {learning_rate}
 ```
 
 ## HW6/ TCP Server and Client
@@ -127,7 +126,7 @@ cd {DIR}
 g++ server.cpp -o server
 g++ client.cpp -o client
 ./server [port_num]
-./client [port_num]
+./client [server_IP] [port_num]
 ```
 
 **Commands supported by the server:**
